@@ -16,7 +16,7 @@ st.set_page_config(
 # --- 2. Advanced Professional Styling (CSS) ---
 st.markdown("""
     <style>
-    /* Main Background - Added professional medical imaging background */
+    /* Main Background */
     .stApp {
         background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), 
                     url("https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=2070&auto=format&fit=crop");
@@ -34,12 +34,24 @@ st.markdown("""
         padding-bottom: 5px;
     }
 
-    /* TABS VISIBILITY - High Contrast */
+    /* TABS ALIGNMENT - Analysis (Left) & History (Right) */
+    div[data-testid="stTabs"] [role="tablist"] {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    /* History & Reports tab ko Right side push karna */
+    div[data-testid="stTabs"] [role="tablist"] button:nth-child(2) {
+        margin-left: auto !important;
+    }
+
     button[data-baseweb="tab"] {
         font-size: 18px !important;
         font-weight: 600 !important;
         color: #475569 !important;
     }
+
     button[aria-selected="true"] {
         color: #ef4444 !important;
         border-bottom-color: #ef4444 !important;
@@ -48,57 +60,41 @@ st.markdown("""
     /* SIDEBAR STYLING */
     section[data-testid="stSidebar"] { background-color: #0f172a !important; }
     section[data-testid="stSidebar"] * { color: #f8fafc !important; }
-    section[data-testid="stSidebar"] .stButton>button {
-        background-color: #334155 !important;
-        color: white !important;
-        border: 1px solid #475569 !important;
-    }
 
-    /* --- FILE UPLOADER CLEANUP (DUPLICATE BUTTON FIX) --- */
-   /* --- FILE UPLOADER CENTER FIX --- */
+    /* --- UPLOADER CLEANUP (Only Red Button) --- */
     [data-testid="stFileUploader"] {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 1rem;
-    }
-    
-    /* Target the container to ensure it centers */
-    [data-testid="stFileUploader"] > section {
+        background-color: transparent !important;
+        border: none !important;
+        padding: 0 !important;
         width: 100% !important;
-        max-width: 450px !important; /* Button ki max width */
-        margin: auto !important;
+        display: flex !important;
+        justify-content: center !important;
     }
 
-    [data-testid="stFileUploaderDropzoneInstructions"] { display: none !important; }
-    
-    /* Target only the main upload button */
-    [data-testid="stFileUploader"] button[kind="secondary"] {
+    [data-testid="stFileUploader"] > section {
+        background-color: transparent !important;
+        border: none !important;
+        width: auto !important;
+    }
+
+    [data-testid="stFileUploader"] section button {
         background-color: #ef4444 !important;
         color: white !important;
-        border: none !important;
         border-radius: 12px !important;
-        font-size: 18px !important;
+        padding: 15px 30px !important;
         font-weight: bold !important;
+        font-size: 18px !important;
+        min-width: 250px !important;
         height: 60px !important;
-        width: 100% !important; /* Container ke andar poora spread hoga */
         box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4) !important;
-        display: block !important;
-        margin: 0 auto !important;
+        border: none !important;
     }
 
-    /* Reset the 'Clear' button so it doesn't look like a red box */
-    [data-testid="stFileUploader"] button[kind="headerNoPadding"] {
-        background-color: transparent !important;
-        color: #64748b !important;
-        box-shadow: none !important;
-        width: auto !important;
-        height: auto !important;
+    [data-testid="stFileUploaderDropzoneInstructions"], 
+    [data-testid="stFileUploader"] small {
+        display: none !important;
     }
-    [data-testid="stFileUploader"] button[kind="headerNoPadding"]::after { content: "" !important; }
 
-    /* Diagnostic Result Cards */
     .result-display {
         padding: 25px;
         border-radius: 15px;
@@ -108,7 +104,6 @@ st.markdown("""
         box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     }
 
-    /* RESTORED FULL FOOTER STYLING */
     .footer-container {
         text-align: center;
         color: #1e293b !important;
@@ -146,8 +141,8 @@ with st.sidebar:
         st.rerun()
 
 # --- 5. Main Dashboard ---
-st.markdown("<h1 class='main-header'>🧬 CardioVision AI Analytics</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #475569; font-size: 18px;'>High-Precision Automated Cardiomegaly Screening Suite</p>", unsafe_allow_html=True)
+st.markdown("<h1 class='main-header'>🧬CardioVision AI Analytics🧬</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #475569; font-size: 18px;'>Enhanced Cardiomegaly Detection using Deep Learning</p>", unsafe_allow_html=True)
 
 tab1, tab2 = st.tabs(["🔍 Analysis Workspace", "📊 History & Reports"])
 
@@ -155,13 +150,12 @@ with tab1:
     if model is None:
         st.error("⚠️ CRITICAL ERROR: Neural network weights missing.")
     else:
-        # Columns ke zariye centering ko double-lock karna
-        _, col_mid, _ = st.columns([0.5, 2, 0.5]) 
+        _, col_mid, _ = st.columns([0.6, 2, 0.6]) 
         with col_mid:
             st.markdown("<br>", unsafe_allow_html=True)
-            # Yahan text ko bhi center kar dete hain
-            st.markdown("<h4 style='text-align: center; color: #1e293b;'>Upload Patient Radiograph</h4>", unsafe_allow_html=True)
+            st.markdown("<h4 style='text-align: center; color: #1e293b; margin-bottom: -20px;'>📤 Select Patient X-ray</h4>", unsafe_allow_html=True)
             uploaded_file = st.file_uploader("", type=["jpg", "png", "jpeg"], label_visibility="collapsed")
+        
         if uploaded_file is not None:
             st.divider()
             col_img, col_res = st.columns([1, 1], gap="large")
@@ -213,14 +207,13 @@ with tab2:
     else:
         st.info("No diagnostic history available.")
 
-# --- 6. RESTORED FULL FOOTER ---
+# --- 6. Footer ---
 st.markdown("""
     <div class="footer-container">
-        <b>Official Diagnostic Suite v2.1</b><br>
+        <b>CardioVision AI</b><br>
         This tool is powered by a Deep Convolutional Neural Network.<br>
-        Developed for Radiographic Research | © 2026 CardioVision AI<br>
         <span style="color: #dc2626; font-weight: bold;">
-            Disclaimer: AI-generated screening only. Final decisions must be confirmed by medical professionals.
+            Disclaimer: For educational and screening support only. Final decisions must be confirmed by medical professionals.
         </span>
     </div>
     """, unsafe_allow_html=True)
