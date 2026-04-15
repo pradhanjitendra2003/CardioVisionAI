@@ -55,11 +55,22 @@ st.markdown("""
     }
 
     /* --- FILE UPLOADER CLEANUP (DUPLICATE BUTTON FIX) --- */
+   /* --- FILE UPLOADER CENTER FIX --- */
     [data-testid="stFileUploader"] {
         width: 100%;
         display: flex;
         justify-content: center;
+        align-items: center;
+        padding: 1rem;
     }
+    
+    /* Target the container to ensure it centers */
+    [data-testid="stFileUploader"] > section {
+        width: 100% !important;
+        max-width: 450px !important; /* Button ki max width */
+        margin: auto !important;
+    }
+
     [data-testid="stFileUploaderDropzoneInstructions"] { display: none !important; }
     
     /* Target only the main upload button */
@@ -71,12 +82,10 @@ st.markdown("""
         font-size: 18px !important;
         font-weight: bold !important;
         height: 60px !important;
-        width: 320px !important;
+        width: 100% !important; /* Container ke andar poora spread hoga */
         box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4) !important;
-    }
-    [data-testid="stFileUploader"] button[kind="secondary"] div span { display: none !important; }
-    [data-testid="stFileUploader"] button[kind="secondary"]::after {
-        content: "📤 Select Patient X-ray";
+        display: block !important;
+        margin: 0 auto !important;
     }
 
     /* Reset the 'Clear' button so it doesn't look like a red box */
