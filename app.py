@@ -155,11 +155,13 @@ with tab1:
     if model is None:
         st.error("⚠️ CRITICAL ERROR: Neural network weights missing.")
     else:
-        _, col_mid, _ = st.columns([1, 2, 1])
+        # Columns ke zariye centering ko double-lock karna
+        _, col_mid, _ = st.columns([0.5, 2, 0.5]) 
         with col_mid:
             st.markdown("<br>", unsafe_allow_html=True)
-            uploaded_file = st.file_uploader("", type=["jpg", "png", "jpeg"])
-        
+            # Yahan text ko bhi center kar dete hain
+            st.markdown("<h4 style='text-align: center; color: #1e293b;'>Upload Patient Radiograph</h4>", unsafe_allow_html=True)
+            uploaded_file = st.file_uploader("", type=["jpg", "png", "jpeg"], label_visibility="collapsed")
         if uploaded_file is not None:
             st.divider()
             col_img, col_res = st.columns([1, 1], gap="large")
