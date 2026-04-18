@@ -7,7 +7,7 @@ import pandas as pd
 
 # --- 1. Page Configuration ---
 st.set_page_config(
-    page_title="CardioVision AI Analytics",
+    page_title="CardioVisionAI",
     page_icon="🧬",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -141,8 +141,8 @@ with st.sidebar:
         st.rerun()
 
 # --- 5. Main Dashboard ---
-st.markdown("<h1 class='main-header'>🧬CardioVision AI Analytics🧬</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #475569; font-size: 18px;'>Enhanced Cardiomegaly Detection using Deep Learning</p>", unsafe_allow_html=True)
+st.markdown("<h1 class='main-header'>🧬CardioVisionAI🧬</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #475569; font-size: 18px;'>Cardiomegaly Detection using CNN Architecture</p>", unsafe_allow_html=True)
 
 tab1, tab2 = st.tabs(["🔍 Analysis Workspace", "📊 History & Reports"])
 
@@ -153,7 +153,7 @@ with tab1:
         _, col_mid, _ = st.columns([0.6, 2, 0.6]) 
         with col_mid:
             st.markdown("<br>", unsafe_allow_html=True)
-            st.markdown("<h4 style='text-align: center; color: #1e293b; margin-bottom: -20px;'>📤 Select Patient X-ray</h4>", unsafe_allow_html=True)
+            st.markdown("<h4 style='text-align: center; color: #1e293b; margin-bottom: -20px;'> 📤Select Patient X-ray</h4>", unsafe_allow_html=True)
             uploaded_file = st.file_uploader("", type=["jpg", "png", "jpeg"], label_visibility="collapsed")
         
         if uploaded_file is not None:
@@ -210,8 +210,8 @@ with tab2:
 # --- 6. Footer ---
 st.markdown("""
     <div class="footer-container">
-        <b>CardioVision AI</b><br>
-        This tool is powered by a Deep Convolutional Neural Network.<br>
+        <b>CardioVisionAI</b><br>
+        This tool is powered by a Custom Sequential Convolutional Neural Network.<br>
         <span style="color: #dc2626; font-weight: bold;">
             Disclaimer: For educational and screening support only. Final decisions must be confirmed by medical professionals.
         </span>
